@@ -16,7 +16,7 @@ findBestMove = fst . maximumBy (comparing snd) . map scoreMove . zip allMoves . 
 scoreTopLevel :: Board -> Moves -> Double
 scoreTopLevel b m
     | movedBoard == b   = 0.0
-    | otherwise         = expectiMiniMax 6 . RandNode 1.0 $ movedBoard
+    | otherwise         = expectiMiniMax 8 . RandNode 1.0 $ movedBoard
         where movedBoard = moveBoard m b
 
 -- Expectiminimax algorithm
@@ -34,7 +34,7 @@ getProb (PlayNode p _) = p
 getProb (RandNode p _) = p
 
 fillEmpties :: Int -> [Zipper Int] -> [Board]
-fillEmpties x = chunksOf 4 . map (toList . replace (x))
+fillEmpties x = map (chunksOf 4 . toList . replace x)
 
 emptyPositions :: Zipper Int -> [Zipper Int]
 emptyPositions (Zip _ []) = []
